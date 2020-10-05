@@ -4,6 +4,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'ervandew/supertab'
 call vundle#end()            " required
 filetype plugin indent on  
 

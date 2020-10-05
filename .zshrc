@@ -118,6 +118,7 @@ bindkey -s "\e[25~" ""
 
 alias toccf='$(lcd) ~/Documents/PhD/code/ccf'
 alias toems='$(lcd) ~/Documents/PhD/code/ems-implementation'
+alias python='python3'
 
 figlet Where am I...
 
