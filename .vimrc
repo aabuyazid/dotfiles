@@ -2,35 +2,31 @@ set nocompatible
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ervandew/supertab'
-call vundle#end()            " required
-filetype plugin indent on  
+Plugin 'ap/vim-buftabline'
+Plugin 'lepture/vim-velocity'
+Plugin 'itchyny/lightline.vim'
+Plugin 'rust-lang/rust.vim'
+call vundle#end()
+filetype plugin indent on
 
 call plug#begin()
-"Plug 'arcticicestudio/nord-vim'
-"Plug 'KKPMW/sacredforest-vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'honza/vim-snippets'
-Plug 'vim-airline/vim-airline'
-"Plug 'xavierd/clang_complete'
-Plug 'w0rp/ale'
-Plug 'dracula/vim', { 'as': 'dracula' }
+"Plug 'sheerun/vim-polyglot'
+"Plug 'honza/vim-snippets'
+"Plug 'vim-airline/vim-airline'
+Plug 'wbthomason/packer.nvim'
+Plug 'arcticicestudio/nord-vim'
+"Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'airblade/vim-rooter'
+"Plug 'lifepillar/vim-mucomplete'
 call plug#end()
 
-colorscheme dracula 
-
-" configure airline
-
-let g:airline#extensions#tabline#enabled = 1
-    
 " map leader character to space
 let mapleader = "\<Space>"
 
 " show line numbers relative to current line
 set number
-
 set t_Co=256
 set t_ut=
 
@@ -47,7 +43,6 @@ set scrolloff=5
 " always have status line
 set laststatus=2
 
-
 " change Y behavior to yank from cursor to end of line
 nnoremap Y y$
 
@@ -63,18 +58,25 @@ set binary
 " leader commands
 " enable replace of word under cursor (shortcut <space> s)
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+
 " quick save
 nnoremap <Leader>w :w<CR>
+
 " remove highlighting
 nnoremap <Leader>h :noh<CR>
+
 " destroy buffer
-nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>d :bp\|bd #<CR>
+
 " switch to next buffer
 nnoremap <Leader>n :bn<CR>
+
 " switch to previous buffer
 nnoremap <Leader>p :bp<CR>
+
 " close vim
 nnoremap <Leader>q :q<CR>
+
 " vertical split buffer
 nnoremap <Leader>v :vsp<CR>
 
@@ -85,6 +87,26 @@ set softtabstop=0
 set expandtab
 set shiftwidth=4
 
+augroup nord-theme-overrides
+  autocmd!
+  " Use 'nord7' as foreground color for Vim comment titles.
+  autocmd ColorScheme nord highlight Comment ctermfg=178 guifg=#dfaf00
+augroup END
+
+colorscheme nord
+
+
+let g:lightline = {
+        \ 'colorscheme': 'nord',
+        \ 'active': {
+        \       'left': [ [ 'mode', 'paste' ],
+        \                 [ 'readonly', 'filename', 'modified' ] ],
+        \       'right': [ [ 'lineinfo','filetype' ] ]
+        \ },
+        \ 'inactive': {
+        \       'right': [ [ 'lineinfo','filetype' ] ]
+        \ },
+        \ }
 " fix backspace
 set backspace=indent,eol,start
 
@@ -98,13 +120,15 @@ set hidden
 nnoremap <S-Tab> <<
 inoremap <S-Tab> <C-d>
 
+" mapping esc to toggling normal/insert
+nnoremap <Esc> i
+inoremap <Esc> <Esc>l
+
 " Extending to F13
 set <F13>=^[[25~
-
 " Toggling normal/insert using Caps Lock
 " nnoremap <F13> i
 " inoremap <F13> <Esc>l
-
 " Allow wrapping
 set wrap
 set linebreak
@@ -112,9 +136,23 @@ set nolist  " list disables linebreak
 
 " Putting right margin
 set cc=80
+" Setting textwidth 80 for markdown 
+au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Will search for tags until root directory
 set tags=tags;/
 
-"path to directory, where library can be found
-let g:clang_library_path='/usr/lib/llvm-3.8/lib'
+" javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+
+nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+
+" mucomplete
+"set completeopt+=menuone
+"let g:mucomplete#enable_auto_at_startup = 1
+"let g:jedi#popup_on_dot = 0
+
+set clipboard=unnamedplus
