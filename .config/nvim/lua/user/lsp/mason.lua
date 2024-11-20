@@ -12,17 +12,17 @@ if not status_ok_1 then
 end
 
 local servers = {
-    "tsserver",
     "cssmodules_ls",
     "emmet_ls",
     "html",
-    "solargraph",
     "rust_analyzer",
     "marksman",
     "clangd",
     "neocmake",
     "lua_ls",
     "dockerls",
+    "ltex",
+    "pyright",
 }
 
 -- Here we declare which settings to pass to the mason, and also ensure servers are installed. If not, they will be installed automatically.
@@ -67,3 +67,8 @@ for _, server in pairs(servers) do
     -- pass them to lspconfig
     lspconfig[server].setup(opts)
 end
+
+require('lspconfig').verible.setup{
+  cmd = {'verible-verilog-ls',
+         '--rules_config_search'}
+}

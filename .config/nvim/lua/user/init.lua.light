@@ -33,6 +33,6 @@ iron.setup({
 require 'lspconfig'.pyright.setup { on_attach = on_attach }
 
 -- vim.cmd.colorscheme "catppuccin"
-vim.cmd.colorscheme "catppuccin-frappe"
--- vim.cmd.colorscheme "catppuccin-latte"
+-- vim.cmd.colorscheme "catppuccin-frappe"
+vim.cmd.colorscheme "catppuccin-latte"
 

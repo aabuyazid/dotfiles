@@ -12,14 +12,13 @@ call vundle#end()
 filetype plugin indent on
 
 call plug#begin()
-"Plug 'sheerun/vim-polyglot'
-"Plug 'honza/vim-snippets'
-"Plug 'vim-airline/vim-airline'
-Plug 'wbthomason/packer.nvim'
-Plug 'arcticicestudio/nord-vim'
-"Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'hkupty/iron.nvim'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+Plug 'GCBallesteros/vim-textobj-hydrogen'
+Plug 'GCBallesteros/jupytext.vim'
 Plug 'airblade/vim-rooter'
-"Plug 'lifepillar/vim-mucomplete'
+Plug 'wbthomason/packer.nvim'
 call plug#end()
 
 " map leader character to space
@@ -87,17 +86,19 @@ set softtabstop=0
 set expandtab
 set shiftwidth=4
 
-augroup nord-theme-overrides
-  autocmd!
-  " Use 'nord7' as foreground color for Vim comment titles.
-  autocmd ColorScheme nord highlight Comment ctermfg=178 guifg=#dfaf00
-augroup END
+set noshowmode
 
-colorscheme nord
+"augroup nord-theme-overrides
+"  autocmd!
+"  " Use 'nord7' as foreground color for Vim comment titles.
+"  autocmd ColorScheme nord highlight Comment ctermfg=178 guifg=#dfaf00
+"augroup END
+"
+"colorscheme nord
 
 
 let g:lightline = {
-        \ 'colorscheme': 'nord',
+        \ 'colorscheme': 'catppuccin',
         \ 'active': {
         \       'left': [ [ 'mode', 'paste' ],
         \                 [ 'readonly', 'filename', 'modified' ] ],
@@ -124,15 +125,14 @@ inoremap <S-Tab> <C-d>
 nnoremap <Esc> i
 inoremap <Esc> <Esc>l
 
-" Extending to F13
-set <F13>=^[[25~
-" Toggling normal/insert using Caps Lock
-" nnoremap <F13> i
-" inoremap <F13> <Esc>l
-" Allow wrapping
-set wrap
-set linebreak
-set nolist  " list disables linebreak
+" Jupytext
+let g:jupytext_fmt = 'py'
+let g:jupytext_style = 'hydrogen'
+
+" Send cell to IronRepl and move to next cell.
+" Depends on the text object defined in vim-textobj-hydrogen
+" You first need to be connected to IronRepl
+nmap ]x ctrih/^# %%<CR><CR>
 
 " Putting right margin
 set cc=80
@@ -141,18 +141,5 @@ au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Will search for tags until root directory
 set tags=tags;/
-
-" javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-
-nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-
-" mucomplete
-"set completeopt+=menuone
-"let g:mucomplete#enable_auto_at_startup = 1
-"let g:jedi#popup_on_dot = 0
 
 set clipboard=unnamedplus

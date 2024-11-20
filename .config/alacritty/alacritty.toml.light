@@ -1,0 +1,22 @@
+import = [
+  # uncomment the flavour you want below:
+  "~/.config/alacritty/catppuccin-latte.toml"
+  # "~/.config/alacritty/catppuccin-frappe.toml"
+  # "~/.config/alacritty/catppuccin-macchiato.toml"
+  # "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[font]
+
+normal.family = "BlexMono Nerd Font Mono"
+normal.style = "Light"
+
+# size = 17
+# size = 16
+size = 15.5
+# size = 15
+# size = 14
+# size = 14.5
+# size = 13
+# size = 12.5
+

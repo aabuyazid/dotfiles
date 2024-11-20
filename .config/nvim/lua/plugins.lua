@@ -24,4 +24,7 @@ return require('packer').startup(function(use)
     -- JDLTS
     use 'eclipse/eclipse.jdt.ls'
     use 'mfussenegger/nvim-jdtls'
+
+    -- Catpuccinuse
+    use { "catppuccin/nvim", as = "catppuccin" }
 end)

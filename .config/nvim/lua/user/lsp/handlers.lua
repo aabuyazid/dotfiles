@@ -115,9 +115,9 @@ function M.remove_augroup(name)
     end
 end
 
-vim.cmd [[ command! LspToggleAutoFormat execute 'lua ]]
+vim.cmd [[ command! LspToggleAutoFormat execute 'lua' ]]
 
 -- Toggle "format on save" once, to start with the format on.
-M.toggle_format_on_save()
+M.disable_format_on_save()
 
 return M

@@ -132,3 +132,4 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 . "$HOME/.cargo/env"
+export IFX_TOOLBOX_UUID=aa967a31-be30-393d-be91-8842392b713b

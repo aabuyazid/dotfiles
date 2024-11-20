@@ -1,0 +1,13 @@
+# Ignore everything but dotfiles
+*
+
+!.bashrc
+!.config
+!.tmux.conf.*
+!.vimrc
+!.zshrc
+!.p10k.zsh
+!.gitignore
+!*.dark
+!*.light
+

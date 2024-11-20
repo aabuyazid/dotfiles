@@ -107,10 +107,23 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH="/home/arkan/sw/intellij/bin:/usr/local/bin:$PATH:/usr/local/go/bin:/home/arkan/go"
-export LD_LIBRARY_PATH="/home/arkan/sw/lib:$LD_LIBRARY_PATH"
-export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
-export PATH=$PATH:$JAVA_HOME/bin
+# export PATH="/home/arkan/sw/intellij/bin:/usr/local/bin:$PATH:/usr/local/go/bin:/home/arkan/go"
+# export LD_LIBRARY_PATH="/home/arkan/sw/lib:$LD_LIBRARY_PATH"
+# export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+# export PATH=$PATH:$JAVA_HOME/bin
+
+# LLVM
+# export PATH="/usr/local/opt/llvm/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/llvm/lib"
+# export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
+# TBDEngine
+export VULKAN_SDK_PATH="/Users/arkan/Documents/TBDEngine/lib/VulkanSDK"
+
+# Graphics
+export GLEW_DIR="${HOME}/Documents/TAMU/Graphics/lib/glew"
+export GLFW_DIR="${HOME}/Documents/TAMU/Graphics/lib/glfw"
+export GLM_INCLUDE_DIR="${HOME}/Documents/TAMU/Graphics/lib/glm"
 
 function lcd() {
     if [[ $# < 1 ]]; then
@@ -119,17 +132,52 @@ function lcd() {
     fi
 
     cd $@ && ls .
+
+    return 0
+}
+
+function toggleTheme() {
+    if [ -f ~/.tmux.conf.dark ]; then
+        echo "Changing to Dark Mode"
+        cp ~/.tmux.conf ~/.tmux.conf.light
+        mv ~/.tmux.conf.dark ~/.tmux.conf
+    else
+        echo "Changing to Light Mode"
+        cp ~/.tmux.conf ~/.tmux.conf.dark
+        mv ~/.tmux.conf.light ~/.tmux.conf
+    fi
+
+    if [ -f ~/.config/alacritty/alacritty.toml.dark ]; then
+        # Change from light -> dark
+        cp ~/.config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml.light
+        mv ~/.config/alacritty/alacritty.toml.dark ~/.config/alacritty/alacritty.toml
+    else
+        # Change from dark -> light
+        cp ~/.config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml.dark
+        mv ~/.config/alacritty/alacritty.toml.light ~/.config/alacritty/alacritty.toml
+    fi
+
+    if [ -f ~/.config/nvim/lua/user/init.lua.dark ]; then
+        # Change from light -> dark
+        cp ~/.config/nvim/lua/user/init.lua ~/.config/nvim/lua/user/init.lua.light
+        mv ~/.config/nvim/lua/user/init.lua.dark ~/.config/nvim/lua/user/init.lua
+ 
+    else
+        # Change from dark -> light
+        cp ~/.config/nvim/lua/user/init.lua ~/.config/nvim/lua/user/init.lua.dark
+        mv ~/.config/nvim/lua/user/init.lua.light ~/.config/nvim/lua/user/init.lua
+    fi
+
+    if [ -n "$TMUX" ]; then
+        tmux source-file ~/.tmux.conf
+    fi
 }
 
 alias cd='lcd'
 
-# For Markdown Development
-alias glow-live="python3 ~/sw/scripts/glow-live.py"
-
-# SSH-ing to David's server for Minecraft
-alias ssh-david="ssh -Y blender@hirikin.tplinkdns.com"
-
 alias glow="clear && glow"
+
+# alias tgtheme="toggleTheme"
 
 # Setting vi controls in bash
 set -o vi
@@ -137,18 +185,22 @@ bindkey -v
 bindkey '^R' history-incremental-search-backward
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/arkan/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/arkan/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/arkan/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/miniconda3/bin:$PATH"
+        export PATH="/Users/arkan/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+conda deactivate 
+conda activate base
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

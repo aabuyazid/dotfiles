@@ -66,8 +66,8 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 # set -g status-left '#{cpu_bg_color} CPU: #{cpu_icon} #{cpu_percentage} | %a %h-%d %H:%M '
 # set -g @plugin "arcticicestudio/nord-tmux"
 set -g @plugin 'catppuccin/tmux#latest'
-set -g @catppuccin_flavor 'mocha'
-# set -g @catppuccin_flavor 'latte'
+# set -g @catppuccin_flavor 'mocha'
+set -g @catppuccin_flavor 'latte'
 run '~/.tmux/plugins/tpm/tpm'
 
 
