@@ -4,6 +4,7 @@
 !.bashrc
 !.config
 !.tmux.conf.*
+!.init.lua.*
 !.vimrc
 !.zshrc
 !.p10k.zsh
