@@ -137,7 +137,48 @@ function lcd() {
 }
 
 function toggleTheme() {
-    if [ -f ~/.tmux.conf.dark ]; then
+    # Verifying certain files exist
+    verified=1
+
+    if [[ ! -f ~/.tmux.conf ]]; then
+        echo "~/.tmux.conf does not exist"
+        verified=0
+    fi
+
+    if [[ ! -f ~/.tmux.conf.dark && ! -f ~/.tmux.conf.light ]]; then
+        echo ".tmux.conf.dark and .tmux.conf.light does not exist"
+        verified=0
+    fi
+
+    if [[ ! -f ~/.config/alacritty/alacritty.toml ]]; then
+        echo "~/.config/alacritty/alacritty.toml does not exist"
+        verified=0
+    fi
+
+    if [[ ! -f ~/.config/alacritty/alacritty.toml.dark && ! -f ~/.config/alacritty/alacritty.toml.light ]]; then
+        echo "alacritty.toml.dark and alacritty.toml.light does not exist"
+        verified=0
+    fi
+
+    if [[ ! -f ~/.config/nvim/lua/user/init.lua ]]; then
+        echo "~/.config/nvim/lua/user/init.lua does not exist"
+        verified=0
+    fi
+
+    if [[ ! -f ~/.config/nvim/lua/user/init.lua.dark && ! -f ~/.config/nvim/lua/user/init.lua.light ]]; then
+        echo "init.lua.dark and init.lua.light does not exist"
+        verified=0
+    fi
+
+    if [[ verified -eq 0 ]]; then
+        exit 1
+    fi
+
+
+    theme=0
+
+    # Actual Toggle Mechanism
+    if [[ -f ~/.tmux.conf.dark ]]; then
         echo "Changing to Dark Mode"
         cp ~/.tmux.conf ~/.tmux.conf.light
         mv ~/.tmux.conf.dark ~/.tmux.conf
@@ -145,9 +186,10 @@ function toggleTheme() {
         echo "Changing to Light Mode"
         cp ~/.tmux.conf ~/.tmux.conf.dark
         mv ~/.tmux.conf.light ~/.tmux.conf
+        theme=1
     fi
 
-    if [ -f ~/.config/alacritty/alacritty.toml.dark ]; then
+    if [[ -f ~/.config/alacritty/alacritty.toml.dark ]]; then
         # Change from light -> dark
         cp ~/.config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml.light
         mv ~/.config/alacritty/alacritty.toml.dark ~/.config/alacritty/alacritty.toml
@@ -157,7 +199,7 @@ function toggleTheme() {
         mv ~/.config/alacritty/alacritty.toml.light ~/.config/alacritty/alacritty.toml
     fi
 
-    if [ -f ~/.config/nvim/lua/user/init.lua.dark ]; then
+    if [[ -f ~/.config/nvim/lua/user/init.lua.dark ]]; then
         # Change from light -> dark
         cp ~/.config/nvim/lua/user/init.lua ~/.config/nvim/lua/user/init.lua.light
         mv ~/.config/nvim/lua/user/init.lua.dark ~/.config/nvim/lua/user/init.lua
@@ -168,7 +210,16 @@ function toggleTheme() {
         mv ~/.config/nvim/lua/user/init.lua.light ~/.config/nvim/lua/user/init.lua
     fi
 
-    if [ -n "$TMUX" ]; then
+    if [[ $(uname) == "Darwin" ]]; then
+        # Switch to Dark Mode
+        if [[ $theme -eq 0 ]]; then 
+            osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to true'
+        else
+            osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to false'
+        fi
+    fi
+
+    if [[ -n "$TMUX" ]]; then
         tmux source-file ~/.tmux.conf
     fi
 }
