@@ -17,13 +17,9 @@ if [[ $(uname) == "Darwin" ]]; then
     export MACOSX_DEPLOYMENT_TARGET=14.1.1
 fi
 
-# Installing LuaJIT
-git clone https://luajit.org/git/luajit.git
-cd luajit
-git checkout v2.1
-make CMAKE_BUILD_TYPE=RelWithDebInfo PREFIX=${SW_PATH}
-make install PREFIX=${SW_PATH}
-cd $TOP_DIR
+# Creating directory that will be deleted later
+mkdir temp && cd temp
+TEMP_DIR=$(pwd)
 
 # Installing Neovim
 git clone git@github.com:neovim/neovim.git
@@ -38,4 +34,7 @@ cd $TOP_DIR
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-nvim +PlugInstall +PluginInstall +PackerInstall
+# nvim +PlugInstall +PluginInstall +PackerInstall
+
+cd $TOP_DIR && rm -rf $TEMP_DIR
+clear && echo Neovim installation complete!
