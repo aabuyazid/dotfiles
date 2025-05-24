@@ -11,4 +11,5 @@
 !.gitignore
 !*.dark
 !*.light
+!install-nvim.sh
 
