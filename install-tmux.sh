@@ -29,9 +29,9 @@ cd texinfo-7.1
 cd $TEMP_DIR
 
 # Installing GNU Automake
-git clone https://github.com/autotools-mirror/automake.git
-cd automake
-git checkout v1.17
+curl -O https://ftp.gnu.org/gnu/automake/automake-1.17.tar.gz
+tar -xzf automake-1.17.tar.gz
+cd automake-1.17.tar.gz
 ./configure --prefix=${SW_PATH} && make && make install
 cd $TEMP_DIR
 
@@ -63,7 +63,11 @@ git clone https://github.com/tmux/tmux.git
 cd tmux
 git checkout 3.5a
 sh autogen.sh
-./configure --prefix=${SW_PATH} && make && make install
+./configure --prefix=$HOME/sw \
+  LDFLAGS="-Wl,-rpath,$HOME/sw/lib -L$HOME/sw/lib" \
+  CPPFLAGS="-I$HOME/sw/include" \
+  --enable-utf8proc
+make && make install
 cd $TEMP_DIR
 
 cd $TOP_DIR && rm -rf $TEMP_DIR

@@ -22,13 +22,13 @@ mkdir temp && cd temp
 TEMP_DIR=$(pwd)
 
 # Installing Neovim
-git clone git@github.com:neovim/neovim.git
+git clone https://github.com/neovim/neovim.git
 cd neovim
 git fetch --tags
 git checkout tags/v0.11.1
 make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=${SW_PATH}
 make install
-cd $TOP_DIR
+cd $TEMP_DIR
 
 # Download Packer
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
